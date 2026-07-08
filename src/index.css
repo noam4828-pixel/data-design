@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Display face for the big section headings (Figma uses "BBH Bartle").
+   Drop the font file at public/fonts/bbh-bartle.woff2 (or .otf) — until then
+   the headings fall back to Inter. */
+@font-face {
+  font-family: 'BBH Bartle';
+  src: url('/fonts/bbh-bartle.ttf') format('truetype');
+  font-display: swap;
+}
+
+.font-display {
+  font-family: 'BBH Bartle', 'Inter', sans-serif;
+}
+
 html, body, #root {
   margin: 0;
   padding: 0;
@@ -22,4 +35,96 @@ html, body, #root {
 
 .swatch-flip {
   animation: swatch-flip 6s ease-in-out infinite;
+}
+
+/* Pulsing butter-yellow halo on the +6-month forecast point — signals it's
+   tappable. */
+@keyframes forecast-glow-pulse {
+  0%, 100% { opacity: 0.15; transform: scale(0.85); }
+  50% { opacity: 0.95; transform: scale(1.6); }
+}
+.forecast-glow-pulse {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: forecast-glow-pulse 1.4s ease-in-out infinite;
+}
+
+/* Expanding "ping" ring — a radar-style pulse that clearly reads as a
+   call-to-tap on the +6-month point. */
+@keyframes forecast-ping {
+  0% { opacity: 0.75; transform: scale(0.8); }
+  80%, 100% { opacity: 0; transform: scale(2.8); }
+}
+.forecast-ping {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: forecast-ping 1.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* Zoom into the graph toward the forecast point, then fade out, before the
+   future-timeline frame takes over. Origin is the +6-month point within the
+   430×394 chart (381.5/430, 126.5/394). */
+@keyframes forecast-zoom {
+  to { transform: scale(6); opacity: 0; }
+}
+.forecast-zoom {
+  transform-origin: 88.7% 32.1%;
+  animation: forecast-zoom 0.7s ease-in forwards;
+}
+
+@keyframes forecast-fade-in {
+  from { opacity: 0; transform: scale(1.12); }
+  to { opacity: 1; transform: scale(1); }
+}
+.forecast-fade-in {
+  animation: forecast-fade-in 0.5s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .forecast-glow-pulse,
+  .forecast-ping,
+  .forecast-zoom,
+  .forecast-fade-in { animation: none; }
+}
+
+/* Splash intro: each word rises up from behind a mask with a soft fade,
+   staggered line by line, for a premium editorial reveal. */
+@keyframes splash-line-rise {
+  from { transform: translateY(115%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.splash-line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.06em; /* headroom so the mask never clips glyph bottoms */
+}
+.splash-line > span {
+  display: block;
+  transform: translateY(115%);
+  opacity: 0;
+  animation: splash-line-rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@media (prefers-reduced-motion: reduce) {
+  .splash-line > span {
+    animation: none;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* Auto-scrolling "spotted on social" carousel. The track holds two identical
+   copies of the cards and slides left by exactly one copy (-50%), looping
+   seamlessly. Duration is set inline so speed stays constant as cards change. */
+@keyframes social-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.social-marquee {
+  animation-name: social-marquee;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+.social-marquee:hover {
+  animation-play-state: paused;
 }

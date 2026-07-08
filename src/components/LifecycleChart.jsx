@@ -1,46 +1,60 @@
 import { useEffect, useRef, useState } from 'react'
 
-// Four points: three observed (historical → current) drawn with one smooth
-// curve, plus a projected "+6 MONTH" forecast point reached by a dashed line.
-// The third point is "now" — filled black and tagged with the status badge.
-const CURVES = {
-  PEAK: [0.1, 0.5, 0.82, 0.82],
-  'HOT/EMERGING': [0.08, 0.42, 0.66, 0.8],
-  RISING: [0.06, 0.3, 0.52, 0.68],
-  STABLE: [0.42, 0.64, 0.8, 0.82],
-}
+// Faithful reproduction of the "TREND FORECAST" frame from Figma
+// (file בייבלי, node 324:648). Geometry, type and colours mirror the design:
+// a 430×394 frame drawn in a viewBox so it scales with the container.
+//
+// Four points: three observed (LATE 2024 → CURRENT 2026) joined by one smooth
+// solid curve, plus a projected "+6 MONTH" point reached by a dashed line.
+// The current point is filled black and tagged with the status badge; the
+// other three are hollow. Points are clickable to reveal stage info — closed
+// by default so the resting state matches the Figma exactly.
+
+// Fixed peak-shaped forecast, straight from the Figma design (node 1:93). The
+// current point sits at the top (the peak) and the projected +6-month point
+// holds flat at the same height, so the dashed forecast line is perfectly
+// horizontal. Fractions of the plot height (0 = x-axis, 1 = peak) are tuned to
+// the exact Figma point positions (319.5 / 212.5 / 126.5 / 126.5).
+const FRACTIONS = [0.104, 0.601, 1, 1]
+
+// The forecast badge always reads PEAK — it labels the current point as the
+// top of the lifecycle, independent of the trend's overall status.
+const BADGE_LABEL = 'PEAK'
 
 const LABELS = ['LATE 2024', '2025', 'CURRENT 2026', '+6 MONTH']
 
 const STAGE_INFO = [
-  "Debuted on the Paris runway collections. Early adopters and high-fashion purists bookmark it as the season's emerging shade.",
-  'Adopted by niche luxury labels and tastemakers, then exploded on TikTok. Moodboards fill up and mass-market retailers ramp production.',
-  'Where the trend sits right now — its current standing in the cycle, driving mainstream visibility and retail demand.',
-  'Projected trajectory. Momentum is expected to hold and plateau as the look settles into a wardrobe staple before the next shift.',
+  'Butter Yellow emerges on the Spring/Summer 2025 runways.',
+  'The trend gains massive traction across TikTok and Instagram.',
+  'The trend is currently at its absolute peak. It is the #1 forecasted tone for the season, dominating street style and summer wardrobes.',
+  'Predictive AI analysis shows Butter Yellow transitioning smoothly into late-season layering',
 ]
 
 const CURRENT = 2 // index of the "now" point
 const FORECAST = 3 // index of the projected point
 
-const VIEW_W = 330
-const VIEW_H = 250
-const X0 = 28
-const Y_TOP = 40
-const Y_BOTTOM = 210
-const XS = [92, 172, 250, 308]
+// Frame + plot geometry, straight from the Figma node (viewBox units == px).
+const VIEW_W = 430
+const VIEW_H = 394
+const X_AXIS = 30 // vertical y-axis x-position (Line 2)
+const Y_BASE = 342 // horizontal x-axis y-position (Line 1)
+const Y_PEAK = 126.5 // top of the plot (Ellipse 2 centre y)
+const AXIS_TOP = 93 // y-axis extends up to here
+const AXIS_BOTTOM = 369 // ...and down to here
+const XS = [61.5, 137.5, 232.5, 381.5] // point centres (Ellipse 1/4/2/5)
+const POINT_R = 5.5 // 11px-diameter ellipses
 
 const POPUP_WIDTH = 210
 const POPUP_GAP = 24
 const ARROW_SIZE = 10
 const FLIP_THRESHOLD_PCT = 45
 
-// Opens on the current-day point by default — a quiet hint that the chart is
-// interactive, since a visitor will see one stage already expanded.
-const DEFAULT_ACTIVE = CURRENT
+// Resting state matches the Figma (no popup open).
+const DEFAULT_ACTIVE = null
 
 // Smooth Catmull-Rom curve through pts[startIdx..endIdx]. Neighbouring phantom
-// points outside that range set the tangents, so the line starts flat at the
-// origin and flattens again into the plateau at the peak.
+// points outside that range set the tangents, so the line leaves the origin
+// flat and flattens again into the plateau at the peak.
 function smoothPath(pts, startIdx, endIdx) {
   let d = `M ${pts[startIdx][0]} ${pts[startIdx][1]}`
   for (let i = startIdx; i < endIdx; i++) {
@@ -57,11 +71,10 @@ function smoothPath(pts, startIdx, endIdx) {
   return d
 }
 
-export default function LifecycleChart({ status }) {
+export default function LifecycleChart({ onForecastClick }) {
   const [active, setActive] = useState(DEFAULT_ACTIVE)
   const popupRef = useRef(null)
-  const curve = CURVES[status] || CURVES.RISING
-  const ys = curve.map((f) => Y_BOTTOM - f * (Y_BOTTOM - Y_TOP))
+  const ys = FRACTIONS.map((f) => Y_BASE - f * (Y_BASE - Y_PEAK))
 
   useEffect(() => {
     if (active === null) return
@@ -81,81 +94,182 @@ export default function LifecycleChart({ status }) {
   // Solid curve runs from the origin up through the current point; phantom
   // points at each end keep the start and the peak horizontal.
   const splinePts = [
-    [X0 - 26, Y_BOTTOM],
-    [X0, Y_BOTTOM],
+    [X_AXIS - 26, Y_BASE],
+    [X_AXIS, Y_BASE],
     [XS[0], ys[0]],
     [XS[1], ys[1]],
     [XS[CURRENT], ys[CURRENT]],
     [XS[CURRENT] + 44, ys[CURRENT]],
   ]
   const solidPath = smoothPath(splinePts, 1, 4)
-  const forecastPath = `M ${XS[CURRENT]} ${ys[CURRENT]} L ${XS[FORECAST]} ${ys[FORECAST]}`
+  // The dashed forecast runs flat from the current point past the +6-month
+  // point to the frame edge (Figma: x234 → x410 at the peak height).
+  const forecastY = ys[CURRENT]
+  const FORECAST_X_END = 410
 
-  const badgeLeft = (XS[CURRENT] / VIEW_W) * 100
-  const badgeTop = ((ys[CURRENT] - 30) / VIEW_H) * 100
+  // Status badge sits centred just above the current point, hugging it like in
+  // Figma (PEAK: point y126.5, badge y90 → a 12.5px gap). Tracking the point's
+  // y keeps the badge above the black dot for every status, not only PEAK.
+  const badgeH = 24
+  const BADGE_GAP = 12.5
+  const badgeW = Math.max(60, BADGE_LABEL.length * 8.5 + 24)
+  const badgeCx = XS[CURRENT]
+  const badgeY = ys[CURRENT] - BADGE_GAP - badgeH
 
-  const toggle = (i) => setActive((prev) => (prev === i ? null : i))
+  // The +6-month point is the entry to the future timeline; every other point
+  // just toggles its stage-info popup.
+  const handlePoint = (i) => {
+    if (i === FORECAST && onForecastClick) onForecastClick()
+    else setActive((prev) => (prev === i ? null : i))
+  }
 
   return (
-    <div className="relative mt-5">
-      <svg viewBox={`0 0 ${VIEW_W} ${VIEW_H}`} className="w-full overflow-visible">
-        <line x1={X0} y1={Y_TOP} x2={X0} y2={Y_BOTTOM} stroke="#000" strokeWidth="1" />
-        <line x1={X0} y1={Y_BOTTOM} x2={VIEW_W - 14} y2={Y_BOTTOM} stroke="#000" strokeWidth="1" />
-        <path
-          d={forecastPath}
-          fill="none"
-          stroke="#9ca3af"
-          strokeWidth="1.5"
-          strokeDasharray="7 7"
-          strokeLinecap="round"
+    <div className="relative w-full">
+      <svg viewBox={`0 0 ${VIEW_W} ${VIEW_H}`} className="w-full block overflow-visible">
+        <defs>
+          {/* Soft butter-yellow blur behind the dashed forecast line (Figma Vector 3). */}
+          <filter id="fcastLineGlow" x="-20%" y="-400%" width="140%" height="900%">
+            <feGaussianBlur stdDeviation="3" />
+          </filter>
+        </defs>
+
+        {/* Title — Figma uses the BBH Bartle display face on two lines. */}
+        <text
+          x="24"
+          y="22"
+          fontFamily="'BBH Bartle', 'Inter', sans-serif"
+          fontSize="32"
+          letterSpacing="-0.8"
+          fill="#000"
+          dominantBaseline="central"
+        >
+          TREND
+        </text>
+        <text
+          x="24"
+          y="60"
+          fontFamily="'BBH Bartle', 'Inter', sans-serif"
+          fontSize="32"
+          letterSpacing="-0.8"
+          fill="#000"
+          dominantBaseline="central"
+        >
+          FORECAST
+        </text>
+
+        {/* Status badge */}
+        <g>
+          <rect x={badgeCx - badgeW / 2} y={badgeY} width={badgeW} height={badgeH} fill="#000" />
+          <text
+            x={badgeCx}
+            y={badgeY + badgeH / 2}
+            fontFamily="Inter, sans-serif"
+            fontWeight="700"
+            fontSize="12"
+            letterSpacing="1.2"
+            fill="#fff"
+            textAnchor="middle"
+            dominantBaseline="central"
+          >
+            {BADGE_LABEL}
+          </text>
+        </g>
+
+        {/* Axes */}
+        <line x1={X_AXIS} y1={AXIS_TOP} x2={X_AXIS} y2={AXIS_BOTTOM} stroke="#000" strokeWidth="1" />
+        <line x1="14" y1={Y_BASE} x2="410" y2={Y_BASE} stroke="#000" strokeWidth="1" />
+
+        {/* Forecast: yellow glow, dashed line, then the solid curve */}
+        <line
+          x1={XS[CURRENT]}
+          y1={forecastY}
+          x2={FORECAST_X_END}
+          y2={forecastY}
+          stroke="#FFF200"
+          strokeOpacity="0.83"
+          strokeWidth="3"
+          filter="url(#fcastLineGlow)"
+        />
+        <line
+          x1={XS[CURRENT]}
+          y1={forecastY}
+          x2={FORECAST_X_END}
+          y2={forecastY}
+          stroke="#8E8E8E"
+          strokeWidth="1"
+          strokeDasharray="10 10"
         />
         <path d={solidPath} fill="none" stroke="#000" strokeWidth="1.75" strokeLinecap="round" />
+
+        {/* Tap affordance on the +6-month point: a pulsing butter-yellow glow plus
+            an expanding "ping" ring, so it clearly reads as interactive. */}
+        <circle
+          className="forecast-glow-pulse"
+          cx={XS[FORECAST]}
+          cy={ys[FORECAST]}
+          r="10"
+          fill="#FFF200"
+          style={{ filter: 'blur(3.5px)', pointerEvents: 'none' }}
+        />
+        <circle
+          className="forecast-ping"
+          cx={XS[FORECAST]}
+          cy={ys[FORECAST]}
+          r={POINT_R}
+          fill="none"
+          stroke="#FFF200"
+          strokeWidth="2"
+          style={{ pointerEvents: 'none' }}
+        />
+
+        {/* Points */}
         {ys.map((y, i) => {
-          const isCurrent = i === CURRENT
-          const isForecast = i === FORECAST
-          const filled = isCurrent || active === i
+          const filled = i === CURRENT || active === i
           return (
-            <g key={i} data-lifecycle-point onClick={() => toggle(i)} className="cursor-pointer">
+            <g
+              key={i}
+              data-lifecycle-point
+              onClick={() => handlePoint(i)}
+              className="cursor-pointer"
+            >
               <circle cx={XS[i]} cy={y} r="16" fill="transparent" />
               <circle
                 cx={XS[i]}
                 cy={y}
-                r={active === i ? 8 : isCurrent ? 7.5 : 6.5}
+                r={POINT_R}
                 fill={filled ? '#000' : '#fff'}
-                stroke={isForecast && active !== i ? '#9ca3af' : '#000'}
-                strokeWidth="1.75"
+                stroke="#000"
+                strokeWidth="1.5"
               />
             </g>
           )
         })}
-      </svg>
 
-      <span
-        className="absolute bg-black text-white text-[10px] font-bold uppercase px-2.5 py-1 tracking-widest whitespace-nowrap pointer-events-none"
-        style={{ left: `${badgeLeft}%`, top: `${badgeTop}%`, transform: 'translate(-50%, -100%)' }}
-      >
-        {status}
-      </span>
-
-      <div className="relative mt-2 h-4 text-[10px] uppercase tracking-tight text-gray-500">
+        {/* Axis labels */}
         {LABELS.map((label, i) => {
-          const left = (XS[i] / VIEW_W) * 100
+          const emphasised = i === CURRENT || active === i
           return (
-            <span
+            <text
               key={label}
               data-lifecycle-point
-              onClick={() => toggle(i)}
-              className={`absolute top-0 cursor-pointer whitespace-nowrap ${
-                i === CURRENT || active === i ? 'font-extrabold text-black' : ''
-              }`}
-              style={{ left: `${left}%`, transform: 'translateX(-50%)' }}
+              onClick={() => handlePoint(i)}
+              x={XS[i]}
+              y="360"
+              fontFamily="Inter, sans-serif"
+              fontWeight={emphasised ? 900 : 400}
+              fontSize="12"
+              fill="#000"
+              textAnchor="middle"
+              dominantBaseline="central"
+              className="cursor-pointer"
             >
               {label}
-            </span>
+            </text>
           )
         })}
-      </div>
+      </svg>
 
+      {/* Stage-info popup — closed by default, so the resting frame matches Figma. */}
       {active !== null &&
         (() => {
           const left = (XS[active] / VIEW_W) * 100
@@ -195,9 +309,7 @@ export default function LifecycleChart({ status }) {
                 <h3 className="font-extrabold text-black text-sm uppercase tracking-tight pr-3">
                   {LABELS[active]}
                 </h3>
-                <p className="mt-2 text-[12px] leading-relaxed text-gray-600">
-                  {STAGE_INFO[active]}
-                </p>
+                <p className="mt-2 text-[12px] leading-relaxed text-gray-600">{STAGE_INFO[active]}</p>
               </div>
             </div>
           )

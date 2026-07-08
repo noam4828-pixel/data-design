@@ -69,15 +69,15 @@ export default function KeyItemsPage({ trend }) {
   return (
     <div className="relative pb-24">
       <div className="px-5 pt-7">
-        <h1 className="text-5xl font-black uppercase leading-[1.05] text-black tracking-tight">
+        <h1 className="font-display uppercase text-[48px] leading-[50px] text-black">
           <span className="block">{line1}</span>
           {line2 && <span className="block">{line2}</span>}
         </h1>
 
-        <div className="flex items-center justify-between mt-5">
-          <div className="flex items-center gap-1.5 text-black">
-            <PinIcon className="w-4 h-4" />
-            <span className="text-[13px] tracking-wide uppercase">Available in Israel</span>
+        <div className="flex items-center justify-between mt-2">
+          <div className="flex items-center gap-2 text-black">
+            <PinIcon className="w-3 h-[15px]" />
+            <span className="text-[14px] tracking-[1.4px] uppercase">Available in Israel</span>
           </div>
           <div ref={filterRef} className="relative">
             <button

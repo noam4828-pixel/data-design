@@ -3,8 +3,10 @@ import Badge from './Badge.jsx'
 import CardImage from './CardImage.jsx'
 import ColorSwatch from './ColorSwatch.jsx'
 import ColorGalleryOverlay from './ColorGalleryOverlay.jsx'
-import LifecycleChart from './LifecycleChart.jsx'
-import KeyItems from './KeyItems.jsx'
+import TrendForecast from './TrendForecast.jsx'
+import SectionTitle from './SectionTitle.jsx'
+import ProductRow from './ProductRow.jsx'
+import SpottedOnSocial from './SpottedOnSocial.jsx'
 import SocialStatRow from './SocialStatRow.jsx'
 import { TikTokIcon, PinterestIcon } from './icons.jsx'
 import { splitTitle } from '../lib/text.js'
@@ -12,6 +14,7 @@ import { splitTitle } from '../lib/text.js'
 export default function TrendDetail({ trend, onViewAllKeyItems }) {
   const [line1, line2] = splitTitle(trend.title)
   const [activeGallery, setActiveGallery] = useState(null)
+  const collections = trend.collections || [{ title: 'The Statement Piece', items: trend.keyItems }]
 
   return (
     <div className="pb-10">
@@ -38,19 +41,27 @@ export default function TrendDetail({ trend, onViewAllKeyItems }) {
         </h1>
       </div>
 
-      <section className="px-5 pt-7">
-        <h2 className="text-2xl font-extrabold text-black tracking-tight">TREND OVERVIEW</h2>
-        <p className="mt-3 text-[15px] leading-relaxed text-gray-500">{trend.description}</p>
+      <section className="pt-[70px]">
+        <TrendForecast />
       </section>
 
-      <section className="px-5 pt-9">
-        <h2 className="text-2xl font-extrabold text-black tracking-tight">TREND FORECAST</h2>
-        <LifecycleChart status={trend.status} />
-      </section>
+      {trend.tagline && (
+        <section className="px-5 pt-6">
+          <div className="flex items-center gap-2.5 border border-black px-2.5 py-3 shadow-[0_4px_6px_0_rgba(0,0,0,0.05)]">
+            <svg viewBox="0 0 15 9" fill="none" className="w-[15px] h-[9px] shrink-0">
+              <path
+                d="M10.5 0L12.2175 1.7175L8.5575 5.3775L5.5575 2.3775L0 7.9425L1.0575 9L5.5575 4.5L8.5575 7.5L13.2825 2.7825L15 4.5V0H10.5Z"
+                fill="black"
+              />
+            </svg>
+            <p className="text-[13px] text-black leading-snug">{trend.tagline}</p>
+          </div>
+        </section>
+      )}
 
-      <section className="px-5 pt-9">
-        <h2 className="text-2xl font-extrabold text-black tracking-tight">COLOR PALETTE MIX</h2>
-        <div className="grid grid-cols-2 gap-3 mt-4">
+      <section className="px-5 pt-[70px]">
+        <SectionTitle>COLOR PALETTE MIX</SectionTitle>
+        <div className="grid grid-cols-2 gap-3 mt-6">
           {trend.palette.map((c) => (
             <ColorSwatch
               key={c.hex}
@@ -62,14 +73,33 @@ export default function TrendDetail({ trend, onViewAllKeyItems }) {
         </div>
       </section>
 
-      <section className="px-5">
-        <KeyItems items={trend.keyItems} onViewAll={onViewAllKeyItems} />
+      <section className="pt-[70px]">
+        <div className="px-5">
+          <SectionTitle>HOW TO ADOPT IT</SectionTitle>
+        </div>
+        <div className="mt-6 flex flex-col gap-9">
+          {collections.map((col) => (
+            <ProductRow
+              key={col.title}
+              title={col.title}
+              items={col.items}
+              nameOnly={col.nameOnly}
+              onViewAll={onViewAllKeyItems}
+            />
+          ))}
+        </div>
       </section>
 
-      <section className="px-5 pt-7 flex flex-col gap-3">
-        <SocialStatRow icon={<TikTokIcon className="w-full h-full" />} label="TIKTOK SENTIMENT" value={trend.tiktokSentiment} />
-        <SocialStatRow icon={<PinterestIcon className="w-full h-full" />} label="PINTEREST VOLUME" value={trend.pinterestVolume} />
-      </section>
+      {trend.social ? (
+        <section className="pt-[70px]">
+          <SpottedOnSocial posts={trend.social} />
+        </section>
+      ) : (
+        <section className="px-5 pt-[70px] flex flex-col gap-3">
+          <SocialStatRow icon={<TikTokIcon className="w-full h-full" />} label="TIKTOK SENTIMENT" value={trend.tiktokSentiment} />
+          <SocialStatRow icon={<PinterestIcon className="w-full h-full" />} label="PINTEREST VOLUME" value={trend.pinterestVolume} />
+        </section>
+      )}
 
       {activeGallery && (
         <ColorGalleryOverlay images={activeGallery} onClose={() => setActiveGallery(null)} />

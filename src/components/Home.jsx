@@ -16,7 +16,7 @@ export default function Home({ trends, onSelect }) {
             variant="hero"
             onSelect={onSelect}
             showSearch={trend.id === 1}
-            fillViewport={trend.id === 1}
+            tall={trend.id === 1}
           />
         ))}
       </div>

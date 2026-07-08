@@ -7,8 +7,9 @@ import { splitTitle } from '../lib/text.js'
 const VARIANT = {
   hero: {
     aspect: 'aspect-[10/13]',
-    number: 'text-[140px] leading-none top-3 left-2',
+    number: 'text-[140px] leading-none top-3 left-5',
     title: 'text-4xl leading-[1.05]',
+    pad: 'px-5',
     badgeSize: 'md',
     showIcon: true,
     iconSize: 'w-9 h-9 p-2',
@@ -17,6 +18,7 @@ const VARIANT = {
     aspect: 'aspect-[3/4]',
     number: 'text-[64px] leading-none top-1 left-1',
     title: 'text-lg leading-tight',
+    pad: 'pl-[14px]',
     badgeSize: 'sm',
     showIcon: true,
     iconSize: 'w-6 h-6 p-1',
@@ -25,6 +27,7 @@ const VARIANT = {
     aspect: 'aspect-square',
     number: 'text-[28px] leading-none top-0.5 left-1',
     title: 'text-[10px] leading-tight',
+    pad: 'pl-[14px]',
     badgeSize: 'sm',
     showIcon: false,
     iconSize: '',
@@ -33,6 +36,7 @@ const VARIANT = {
     aspect: 'aspect-square',
     number: 'text-[18px] leading-none top-0.5 left-0.5',
     title: 'text-[7px] leading-tight',
+    pad: 'pl-[14px]',
     badgeSize: 'sm',
     showIcon: false,
     iconSize: '',
@@ -42,7 +46,7 @@ const VARIANT = {
 // Status badges only ever render on the top 3 hero cards.
 const BADGE_VARIANTS = new Set(['hero'])
 
-export default function TrendCard({ trend, variant, onSelect, showSearch, fillViewport }) {
+export default function TrendCard({ trend, variant, onSelect, showSearch, tall }) {
   const [saved, setSaved] = useState(false)
   const v = VARIANT[variant]
   const [line1, line2] = splitTitle(trend.title)
@@ -52,7 +56,7 @@ export default function TrendCard({ trend, variant, onSelect, showSearch, fillVi
       type="button"
       onClick={() => onSelect(trend)}
       className={`relative w-full ${
-        fillViewport ? 'h-[calc(100vh-91px)]' : v.aspect
+        tall ? 'h-[779px]' : v.aspect
       } overflow-hidden bg-black/5 text-left block`}
     >
       <CardImage src={trend.image} images={trend.gallery} alt={trend.title} palette={trend.palette} />
@@ -87,7 +91,7 @@ export default function TrendCard({ trend, variant, onSelect, showSearch, fillVi
       )}
 
       <h3
-        className={`absolute inset-x-0 bottom-0 z-20 font-black uppercase text-white tracking-tight pl-[14px] pb-[13px] ${v.title}`}
+        className={`absolute inset-x-0 bottom-0 z-20 font-black uppercase text-white tracking-tight pb-[13px] ${v.pad} ${v.title}`}
         style={{ mixBlendMode: 'overlay', opacity: 0.95 }}
       >
         <span className="block">{line1}</span>

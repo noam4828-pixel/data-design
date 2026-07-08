@@ -22,8 +22,20 @@ export const trends = [
     ],
     description:
       "The season's new neutral. 'Butter Yellow' has officially replaced traditional whites and creams, offering a soft, sophisticated warmth to the minimalist wardrobe. Driven by Paris runways and viral TikTok styling loops, it is celebrated for its effortless versatility and seamless pairing with rich earthy tones.",
+    tagline:
+      'A new neutral. Even after the social media hype cools down, this tone remains a timeless wardrobe staple.',
     palette: [
-      { hex: '#F6E4B1' },
+      {
+        hex: '#A3BCC9',
+        gallery: [
+          img('colorpallete/babyblue2.png'),
+          img('colorpallete/babyblue1.png'),
+          img('colorpallete/babyblue3.png'),
+          img('colorpallete/babyblue4.png'),
+          img('colorpallete/babyblue5.png'),
+          img('colorpallete/babyblue6.png'),
+        ],
+      },
       {
         hex: '#3D2722',
         gallery: [
@@ -35,10 +47,28 @@ export const trends = [
           img('brown-yellow6.png'),
         ],
       },
-      { hex: '#413E42' },
-      { hex: '#4A1521' },
-      { hex: '#2A344A' },
-      { hex: '#A3BCC9' },
+      {
+        hex: '#FCD3D9',
+        gallery: [
+          img('colorpallete/pink2.png'),
+          img('colorpallete/pink1.png'),
+          img('colorpallete/pink3.png'),
+          img('colorpallete/pink4.png'),
+          img('colorpallete/pink5.png'),
+          img('colorpallete/pink6.png'),
+        ],
+      },
+      {
+        hex: '#810614',
+        gallery: [
+          img('colorpallete/red2.png'),
+          img('colorpallete/red1.png'),
+          img('colorpallete/red3.png'),
+          img('colorpallete/red4.png'),
+          img('colorpallete/red5.png'),
+          img('colorpallete/red6.png'),
+        ],
+      },
     ],
 
     keyItems: [
@@ -53,6 +83,87 @@ export const trends = [
     ],
     tiktokSentiment: 88,
     pinterestVolume: 42,
+    // "How to Adopt It" — three curated sub-collections. The last one is a
+    // name-only "shop your closet" row.
+    collections: [
+      {
+        title: 'The Statement Piece',
+        items: [
+          { brand: 'ZARA', name: 'Midi satin dress', price: '239.90 ₪', image: keyItemImg('saten-dress.png') },
+          { brand: 'ZARA', name: 'Short sleeve cardigan', price: '129.90 ₪', image: keyItemImg('Short-sleeve-cardigan.png') },
+          { brand: 'MANGO', name: 'Wrap skirt', price: '279.90 ₪', image: keyItemImg('Wrap-Skirt.png') },
+        ],
+      },
+      {
+        title: 'The Smart Twist',
+        items: [
+          { brand: 'REVOLVE', name: 'Chino Sport Cap', price: '146 ₪', image: keyItemImg('sportcap.png'), imageFit: 'cover' },
+          { brand: 'ADIDAS', name: 'SL72 OG Shoes', price: '449.90 ₪', image: keyItemImg('adidas.png'), imageFit: 'cover' },
+          { brand: 'COS', name: 'Mini cavatelli clutch bag', price: '279.90 ₪', image: keyItemImg('cos2.png'), imageFit: 'cover' },
+        ],
+      },
+      {
+        title: 'Shop Your Closet',
+        nameOnly: true,
+        items: [{ name: 'Button-down shirt' }, { name: 'Tailored shorts' }, { name: 'Sneakers shoes' }],
+      },
+    ],
+    // "Spotted on social" — viral clips. `url` cards open the original post and
+    // show a play button + platform icon; image-only entries are placeholders.
+    social: [
+      {
+        platform: 'tiktok',
+        url: 'https://www.tiktok.com/@vanessatiiu/video/7529961511264062726',
+        author: 'vanessatiiu',
+        image: '/social/tiktok-vanessatiiu.jpg',
+      },
+      {
+        platform: 'tiktok',
+        url: 'https://www.tiktok.com/@babyboofashion/video/7643628577812090132',
+        author: 'babyboofashion',
+        image: '/social/tiktok-babyboofashion.jpg',
+      },
+      {
+        platform: 'tiktok',
+        url: 'https://www.tiktok.com/@katelynscart/video/7616526069914537230',
+        author: 'katelynscart',
+        image: '/social/tiktok-katelynscart.jpg',
+      },
+      {
+        platform: 'tiktok',
+        url: 'https://www.tiktok.com/@costesfashion/video/7639353674623454496',
+        author: 'costesfashion',
+        image: '/social/tiktok-costesfashion.jpg',
+      },
+      {
+        platform: 'instagram',
+        url: 'https://www.instagram.com/reel/Dachbzku9sJ/',
+        author: 'vogue',
+        image: '/social/ig-dachbzku9sj.jpg',
+      },
+      {
+        platform: 'instagram',
+        url: 'https://www.instagram.com/p/C5djfdRPygs/',
+        author: 'nikakes',
+        image: '/social/ig-c5djfdrpygs.jpg',
+      },
+      {
+        platform: 'instagram',
+        url: 'https://www.instagram.com/p/DVdvkZIjKIl/',
+        image: '/social/ig-dvdvkzijkil.jpg',
+      },
+      {
+        platform: 'tiktok',
+        url: 'https://www.tiktok.com/@loloblogger.k/video/7509918586312363282',
+        author: 'loloblogger.k',
+        image: '/social/tiktok-loloblogger-k.jpg',
+      },
+      {
+        platform: 'instagram',
+        url: 'https://www.instagram.com/p/DNEDMUTMcWD/',
+        image: '/social/ig-dnedmutmcwd.jpg',
+      },
+    ],
   },
   {
     id: 2,
