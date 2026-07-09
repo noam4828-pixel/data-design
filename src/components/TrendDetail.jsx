@@ -7,14 +7,16 @@ import TrendForecast from './TrendForecast.jsx'
 import SectionTitle from './SectionTitle.jsx'
 import ProductRow from './ProductRow.jsx'
 import SpottedOnSocial from './SpottedOnSocial.jsx'
-import SocialStatRow from './SocialStatRow.jsx'
-import { TikTokIcon, PinterestIcon } from './icons.jsx'
 import { splitTitle } from '../lib/text.js'
 
 export default function TrendDetail({ trend, onViewAllKeyItems }) {
   const [line1, line2] = splitTitle(trend.title)
   const [activeGallery, setActiveGallery] = useState(null)
+  // Trends without bespoke data fall back to content derived from their own
+  // fields, so every detail page shares the same structure as Butter Yellow.
   const collections = trend.collections || [{ title: 'The Statement Piece', items: trend.keyItems }]
+  const tagline = trend.tagline || trend.description?.split('. ')[0].replace(/\.?$/, '.')
+  const social = trend.social || (trend.gallery || []).map((image) => ({ image }))
 
   return (
     <div className="pb-10">
@@ -45,7 +47,7 @@ export default function TrendDetail({ trend, onViewAllKeyItems }) {
         <TrendForecast />
       </section>
 
-      {trend.tagline && (
+      {tagline && (
         <section className="px-5 pt-6">
           <div className="flex items-center gap-2.5 border border-black px-2.5 py-3 shadow-[0_4px_6px_0_rgba(0,0,0,0.05)]">
             <svg viewBox="0 0 15 9" fill="none" className="w-[15px] h-[9px] shrink-0">
@@ -54,7 +56,7 @@ export default function TrendDetail({ trend, onViewAllKeyItems }) {
                 fill="black"
               />
             </svg>
-            <p className="text-[13px] text-black leading-snug">{trend.tagline}</p>
+            <p className="text-[13px] text-black leading-snug">{tagline}</p>
           </div>
         </section>
       )}
@@ -90,14 +92,9 @@ export default function TrendDetail({ trend, onViewAllKeyItems }) {
         </div>
       </section>
 
-      {trend.social ? (
+      {social.length > 0 && (
         <section className="pt-[70px]">
-          <SpottedOnSocial posts={trend.social} />
-        </section>
-      ) : (
-        <section className="px-5 pt-[70px] flex flex-col gap-3">
-          <SocialStatRow icon={<TikTokIcon className="w-full h-full" />} label="TIKTOK SENTIMENT" value={trend.tiktokSentiment} />
-          <SocialStatRow icon={<PinterestIcon className="w-full h-full" />} label="PINTEREST VOLUME" value={trend.pinterestVolume} />
+          <SpottedOnSocial posts={social} />
         </section>
       )}
 

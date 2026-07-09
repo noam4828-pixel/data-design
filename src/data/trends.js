@@ -377,7 +377,7 @@ export const trends = [
     number: '10',
     title: 'CHERRY RED',
     status: 'HOT/EMERGING',
-    image: img('cherry-red.jpg'),
+    image: img('cherry-red.png'),
     description:
       'A saturated, high-energy red moves beyond accent status into full outfit territory, worn head-to-toe as a confident departure from quiet luxury neutrals.',
     palette: [
@@ -402,7 +402,7 @@ export const trends = [
     number: '11',
     title: 'MESH BALLET',
     status: 'RISING',
-    image: img('mesh-ballet.jpg'),
+    image: img('mesh-ballet.png'),
     description:
       'Ballet flats reappear in sheer mesh uppers, blending the balletcore aesthetic with a delicate, almost-bare look that pairs equally well with tulle skirts and tailored trousers.',
     palette: [
@@ -427,7 +427,7 @@ export const trends = [
     number: '12',
     title: 'SKIRT OVER PANTS',
     status: 'RISING',
-    image: img('skirt-over-pants.jpg'),
+    image: img('skirt-over-pants.png'),
     description:
       'A mini or midi skirt is layered directly over trousers, creating a hybrid silhouette that has migrated from street-style outliers into a recognizable seasonal staple.',
     palette: [
@@ -452,7 +452,7 @@ export const trends = [
     number: '13',
     title: 'MODERN BOHO',
     status: 'STABLE',
-    image: img('modern-boho.jpg'),
+    image: img('modern-boho.png'),
     description:
       'Bohemian staples — paisley prints, fringe, and flowing silhouettes — are reworked with cleaner lines and a restrained palette, trading festival excess for everyday wearability.',
     palette: [
@@ -477,7 +477,7 @@ export const trends = [
     number: '14',
     title: 'CORPORATE SLEEK',
     status: 'PEAK',
-    image: img('corporate-sleek.jpg'),
+    image: img('corporate-sleek.png'),
     description:
       'Sharp shoulders, monochrome suiting, and polished accessories define a corporate aesthetic stripped of excess — power dressing rebuilt for a quieter, more deliberate era.',
     palette: [
@@ -502,7 +502,7 @@ export const trends = [
     number: '15',
     title: 'CROCHET LOOK',
     status: 'RISING',
-    image: img('crochet-look.jpg'),
+    image: img('crochet-look.png'),
     description:
       'Hand-crafted crochet texture spreads from beachwear into tops, dresses, and accessories, valued for its tactile, artisanal quality in an increasingly digital wardrobe.',
     palette: [
@@ -527,7 +527,7 @@ export const trends = [
     number: '16',
     title: 'SLOUCHY XL BAGS',
     status: 'HOT/EMERGING',
-    image: img('slouchy-bags.jpg'),
+    image: img('slouchy-xl-bags.png'),
     description:
       'Oversized, unstructured bags slump rather than stand, prioritizing soft volume and capacity over rigid shape — a deliberate counterpoint to years of structured top-handles.',
     palette: [
@@ -552,7 +552,7 @@ export const trends = [
     number: '17',
     title: 'CYBER SHADES',
     status: 'RISING',
-    image: img('cyber-shades.jpg'),
+    image: img('cyber-shades.png'),
     description:
       'Wraparound frames and mirrored lenses bring a Y2K, futuristic edge to eyewear, favored for their bold, sculptural presence against otherwise minimal outfits.',
     palette: [
@@ -577,7 +577,7 @@ export const trends = [
     number: '18',
     title: 'KNIT POLO',
     status: 'STABLE',
-    image: img('knit-polo.jpg'),
+    image: img('knit-polo.png'),
     description:
       'The knit polo bridges casual and smart-casual wardrobes, its ribbed collar and fine-gauge yarn offering a more elevated alternative to the classic cotton tee.',
     palette: [
@@ -602,7 +602,7 @@ export const trends = [
     number: '19',
     title: 'DEEP AUBERGINE',
     status: 'HOT/EMERGING',
-    image: img('deep-aubergine.jpg'),
+    image: img('deep-aubergine.png'),
     description:
       'A near-black purple emerges as the season\'s richest neutral, lending depth to outerwear, knitwear, and accessories without straying into overt color.',
     palette: [
@@ -627,7 +627,7 @@ export const trends = [
     number: '20',
     title: 'STATEMENT BELTS',
     status: 'RISING',
-    image: img('statement-belts.jpg'),
+    image: img('statement-belts.png'),
     description:
       'Oversized buckles and contrast leathers turn the belt into a focal point rather than an afterthought, cinching everything from tailored coats to relaxed denim.',
     palette: [
@@ -652,7 +652,7 @@ export const trends = [
     number: '21',
     title: 'CAPRI PANTS',
     status: 'PEAK',
-    image: img('capri-pants.jpg'),
+    image: img('capri-pants.png'),
     description:
       'Cropped just below the calf, capri pants make a confident 2000s comeback, styled close to the leg with platform shoes for a deliberately retro silhouette.',
     palette: [
@@ -675,76 +675,101 @@ export const trends = [
   {
     id: 22,
     number: '22',
-    title: 'PLEATED MIDI',
-    status: 'STABLE',
-    image: img('pleated-midi.jpg'),
+    title: 'METALLIC SNEAKERS',
+    status: 'RISING',
+    image: img('metallic-sneakers.png'),
     description:
-      'Fine, knife-edge pleating gives motion and structure to the midi skirt, a quiet workhorse silhouette that continues to anchor transitional wardrobes.',
+      'Chrome and silver sneakers step into the spotlight, adding a futuristic sheen to off-duty looks. Once a niche statement, the metallic finish is fast becoming the season’s go-to way to elevate denim and tailoring alike.',
     palette: [
-      { hex: '#E2DCCB' },
-      { hex: '#2B2820' },
-      { hex: '#A89A7A' },
-      { hex: '#5C5343' },
-      { hex: '#CFC4A4' },
-      { hex: '#15130E' },
+      { hex: '#C7CACE' },
+      { hex: '#8A9196' },
+      { hex: '#5A6066' },
+      { hex: '#D9DCE0' },
+      { hex: '#3A3E42' },
+      { hex: '#14161A' },
     ],
 
     keyItems: [
-      { brand: 'UNIQLO', name: 'Tailored short', category: 'Shorts', price: '269.90 ₪', image: keyItemImg('pleated-midi-1.jpg') },
-      { brand: 'MASSIMO DUTTI', name: 'Ribbed tank', category: 'Tops', price: '139.90 ₪', image: keyItemImg('pleated-midi-2.jpg') },
-      { brand: 'ZARA', name: 'Relaxed blazer', category: 'Outerwear', price: '269.90 ₪', image: keyItemImg('pleated-midi-3.jpg') },
+      { brand: 'ADIDAS', name: 'Metallic runner', category: 'Shoes', price: '499.90 ₪', image: keyItemImg('metallic-sneakers-1.jpg') },
+      { brand: 'ZARA', name: 'Chrome trainer', category: 'Shoes', price: '229.90 ₪', image: keyItemImg('metallic-sneakers-2.jpg') },
+      { brand: 'NIKE', name: 'Silver low-top', category: 'Shoes', price: '549.90 ₪', image: keyItemImg('metallic-sneakers-3.jpg') },
     ],
-    tiktokSentiment: 71,
-    pinterestVolume: 32,
+    tiktokSentiment: 84,
+    pinterestVolume: 38,
   },
   {
     id: 23,
     number: '23',
-    title: 'CHUNKY LOAFERS',
-    status: 'RISING',
-    image: img('chunky-loafers.jpg'),
+    title: 'OVERSIZED TRENCH COATS',
+    status: 'HOT/EMERGING',
+    image: img('oversized-trench-coats.png'),
     description:
-      'A heavier, lugged sole reinvents the classic loafer with a sporty undertone, grounding tailored and feminine looks alike in something deliberately unrefined.',
+      'The trench goes big — dropped shoulders and floor-skimming hems turn the wardrobe classic into a statement layer. Belted loosely over everything from denim to slip dresses, the oversized cut brings effortless drama to transitional dressing.',
     palette: [
-      { hex: '#3A2E22' },
-      { hex: '#13100C' },
-      { hex: '#6E5A42' },
-      { hex: '#241C14' },
-      { hex: '#A48A66' },
-      { hex: '#0A0806' },
+      { hex: '#C7A97E' },
+      { hex: '#E3D6BE' },
+      { hex: '#8A6E4B' },
+      { hex: '#4A3B29' },
+      { hex: '#A88A63' },
+      { hex: '#23190F' },
     ],
 
     keyItems: [
-      { brand: 'MASSIMO DUTTI', name: 'Pleated skirt', category: 'Skirts', price: '159.90 ₪', image: keyItemImg('chunky-loafers-1.jpg') },
-      { brand: 'ZARA', name: 'Tailored short', category: 'Shorts', price: '289.90 ₪', image: keyItemImg('chunky-loafers-2.jpg') },
-      { brand: 'MANGO', name: 'Ribbed tank', category: 'Tops', price: '159.90 ₪', image: keyItemImg('chunky-loafers-3.jpg') },
+      { brand: 'MANGO', name: 'Belted trench coat', category: 'Outerwear', price: '399.90 ₪', image: keyItemImg('oversized-trench-coats-1.jpg') },
+      { brand: 'ZARA', name: 'Long trench', category: 'Outerwear', price: '349.90 ₪', image: keyItemImg('oversized-trench-coats-2.jpg') },
+      { brand: 'COS', name: 'Wide-leg trouser', category: 'Pants', price: '279.90 ₪', image: keyItemImg('oversized-trench-coats-3.jpg') },
     ],
-    tiktokSentiment: 56,
-    pinterestVolume: 34,
+    tiktokSentiment: 79,
+    pinterestVolume: 44,
   },
   {
     id: 24,
     number: '24',
-    title: 'SILK SCARVES',
-    status: 'HOT/EMERGING',
-    image: img('silk-scarves.jpg'),
+    title: 'BIKER JACKETS',
+    status: 'RISING',
+    image: img('biker-jackets.png'),
     description:
-      'Printed silk scarves move off the neck and onto bags, belt loops, and hair, becoming a flexible, low-commitment way to introduce pattern into a pared-back wardrobe.',
+      'The moto jacket returns with attitude — cropped leather, asymmetric zips, and hardware detailing bring an edge to soft, feminine pieces. Thrown over slip dresses or tailoring, it is the season’s favourite way to toughen up a look.',
     palette: [
-      { hex: '#B23A48' },
-      { hex: '#221013' },
-      { hex: '#D98C95' },
-      { hex: '#5C2730' },
-      { hex: '#EFC9CD' },
-      { hex: '#100709' },
+      { hex: '#1C1B1E' },
+      { hex: '#3A383C' },
+      { hex: '#6B2A2E' },
+      { hex: '#B8B4AE' },
+      { hex: '#4E4A50' },
+      { hex: '#0A090B' },
     ],
 
     keyItems: [
-      { brand: 'ZARA', name: 'Relaxed blazer', category: 'Outerwear', price: '309.90 ₪', image: keyItemImg('silk-scarves-1.jpg') },
-      { brand: 'MANGO', name: 'Pleated skirt', category: 'Skirts', price: '179.90 ₪', image: keyItemImg('silk-scarves-2.jpg') },
-      { brand: 'H&M', name: 'Tailored short', category: 'Shorts', price: '309.90 ₪', image: keyItemImg('silk-scarves-3.jpg') },
+      { brand: 'ZARA', name: 'Faux leather biker', category: 'Outerwear', price: '299.90 ₪', image: keyItemImg('biker-jackets-1.jpg') },
+      { brand: 'MANGO', name: 'Cropped moto jacket', category: 'Outerwear', price: '359.90 ₪', image: keyItemImg('biker-jackets-2.jpg') },
+      { brand: 'PULL&BEAR', name: 'Straight-leg jeans', category: 'Denim', price: '139.90 ₪', image: keyItemImg('biker-jackets-3.jpg') },
     ],
-    tiktokSentiment: 87,
-    pinterestVolume: 30,
+    tiktokSentiment: 82,
+    pinterestVolume: 41,
+  },
+  {
+    id: 25,
+    number: '25',
+    title: 'WIDE-LEG JEANS',
+    status: 'PEAK',
+    image: img('wide-leg-jeans.png'),
+    description:
+      'Denim goes long and loose — a high-rise, floor-grazing wide leg becomes the season’s default silhouette. Effortless with everything from cropped knits to heels, it has fully replaced the skinny as the everyday jean.',
+    palette: [
+      { hex: '#3B5169' },
+      { hex: '#6E88A3' },
+      { hex: '#A9BED0' },
+      { hex: '#E4E0D5' },
+      { hex: '#26333F' },
+      { hex: '#12181E' },
+    ],
+
+    keyItems: [
+      { brand: 'LEVI’S', name: 'Ribcage wide leg', category: 'Denim', price: '429.90 ₪', image: keyItemImg('wide-leg-jeans-1.jpg') },
+      { brand: 'ZARA', name: 'Full-length jean', category: 'Denim', price: '159.90 ₪', image: keyItemImg('wide-leg-jeans-2.jpg') },
+      { brand: 'COS', name: 'Cropped knit', category: 'Knitwear', price: '199.90 ₪', image: keyItemImg('wide-leg-jeans-3.jpg') },
+    ],
+    tiktokSentiment: 90,
+    pinterestVolume: 47,
   },
 ]
