@@ -203,6 +203,13 @@ export const trends = [
     title: 'WEDGE THONGS',
     status: 'RISING',
     image: img('wedge-thongs.jpg'),
+    gallery: [
+      img('wedge-thongs.jpg'),
+      img('wedge-thongs2.png'),
+      img('wedge-thongs3.png'),
+      img('wedge-thongs4.png'),
+      img('wedge-thongs5.png'),
+    ],
     description:
       "A nostalgic 2000s shape returns with a modern lift. The wedge thong sandal pairs the comfort of a flip-flop with the elevation of a platform, becoming the off-duty shoe of choice for warm-weather dressing. Expect them in tan leathers, woven raffia, and high-shine patents alike.",
     palette: [
@@ -753,8 +760,11 @@ export const trends = [
     title: 'WIDE-LEG JEANS',
     status: 'PEAK',
     image: img('wide-leg-jeans.png'),
+    forecast: 'declining',
     description:
       'Denim goes long and loose — a high-rise, floor-grazing wide leg becomes the season’s default silhouette. Effortless with everything from cropped knits to heels, it has fully replaced the skinny as the everyday jean.',
+    tagline:
+      "The extreme oversized silhouette is losing momentum. If you're buying, don't stock up—stick to one high-quality pair or transition into a relaxed-straight fit.",
     palette: [
       { hex: '#3B5169' },
       { hex: '#6E88A3' },
@@ -771,5 +781,105 @@ export const trends = [
     ],
     tiktokSentiment: 90,
     pinterestVolume: 47,
+  },
+  {
+    id: 26,
+    number: '26',
+    title: 'COWBOY BOOTS',
+    status: 'RISING',
+    image: img('cowboy-boots.png'),
+    description:
+      'Western is back in the rotation — pointed toes, stacked heels, and decorative stitching bring a cowboy edge to everyday looks. Worn under maxi dresses or cropped jeans, the boot adds instant attitude to soft summer staples.',
+    palette: [
+      { hex: '#B07C4A' },
+      { hex: '#7A4E2A' },
+      { hex: '#E4CBA3' },
+      { hex: '#4A2E18' },
+      { hex: '#C99A66' },
+      { hex: '#1E120A' },
+    ],
+
+    keyItems: [
+      { brand: 'ZARA', name: 'Western ankle boot', category: 'Shoes', price: '299.90 ₪', image: keyItemImg('cowboy-boots-1.jpg') },
+      { brand: 'MANGO', name: 'Denim maxi skirt', category: 'Skirts', price: '199.90 ₪', image: keyItemImg('cowboy-boots-2.jpg') },
+      { brand: 'H&M', name: 'Suede fringe bag', category: 'Accessories', price: '129.90 ₪', image: keyItemImg('cowboy-boots-3.jpg') },
+    ],
+    tiktokSentiment: 76,
+    pinterestVolume: 39,
+  },
+  {
+    id: 27,
+    number: '27',
+    title: 'CHUNKY SILVER RINGS',
+    status: 'HOT/EMERGING',
+    image: img('chunky-silver-rings.png'),
+    description:
+      'Bold silver hardware takes over hands — stacked chunky rings in molten, sculptural shapes replace dainty gold. Piled across every finger, they add a cool, tactile edge to minimalist and maximalist looks alike.',
+    palette: [
+      { hex: '#C9CDD2' },
+      { hex: '#9AA0A6' },
+      { hex: '#6C7278' },
+      { hex: '#E2E5E8' },
+      { hex: '#43474C' },
+      { hex: '#17191C' },
+    ],
+
+    keyItems: [
+      { brand: 'PANDORA', name: 'Chunky signet ring', category: 'Accessories', price: '249.90 ₪', image: keyItemImg('chunky-silver-rings-1.jpg') },
+      { brand: 'ZARA', name: 'Molten ring set', category: 'Accessories', price: '69.90 ₪', image: keyItemImg('chunky-silver-rings-2.jpg') },
+      { brand: 'MEJURI', name: 'Dome ring', category: 'Accessories', price: '399.90 ₪', image: keyItemImg('chunky-silver-rings-3.jpg') },
+    ],
+    tiktokSentiment: 80,
+    pinterestVolume: 43,
+  },
+  {
+    id: 28,
+    number: '28',
+    title: 'ANIMAL PRINT DENIM',
+    status: 'RISING',
+    image: img('animal-print-denim.png'),
+    description:
+      'Denim gets wild — leopard and zebra washes turn the everyday jean into the outfit’s main event. Balanced against plain knits and neutral tailoring, the print reads as playful rather than loud.',
+    palette: [
+      { hex: '#C79A5B' },
+      { hex: '#7A5A32' },
+      { hex: '#E6D6B8' },
+      { hex: '#3B2C1A' },
+      { hex: '#A8823F' },
+      { hex: '#171008' },
+    ],
+
+    keyItems: [
+      { brand: 'ZARA', name: 'Leopard wide-leg jean', category: 'Denim', price: '199.90 ₪', image: keyItemImg('animal-print-denim-1.jpg') },
+      { brand: 'MANGO', name: 'Printed denim jacket', category: 'Outerwear', price: '259.90 ₪', image: keyItemImg('animal-print-denim-2.jpg') },
+      { brand: 'COS', name: 'Ribbed knit tank', category: 'Tops', price: '129.90 ₪', image: keyItemImg('animal-print-denim-3.jpg') },
+    ],
+    tiktokSentiment: 78,
+    pinterestVolume: 40,
+  },
+  {
+    id: 29,
+    number: '29',
+    title: 'MARY JANE SHOES',
+    status: 'RISING',
+    image: img('mary-jane-shoes.png'),
+    description:
+      'The schoolgirl staple grows up — rounded toes and a single strap bring a demure, retro charm to everything from slip dresses to wide-leg trousers. Flat or heeled, the Mary Jane is the season’s sweetest way to finish a look.',
+    palette: [
+      { hex: '#1B1A1D' },
+      { hex: '#3E3A3B' },
+      { hex: '#8C6A72' },
+      { hex: '#C9B9BD' },
+      { hex: '#5A4E52' },
+      { hex: '#0B0A0C' },
+    ],
+
+    keyItems: [
+      { brand: 'ZARA', name: 'Patent Mary Jane', category: 'Shoes', price: '199.90 ₪', image: keyItemImg('mary-jane-shoes-1.jpg') },
+      { brand: 'MANGO', name: 'Slip midi dress', category: 'Dresses', price: '229.90 ₪', image: keyItemImg('mary-jane-shoes-2.jpg') },
+      { brand: 'COS', name: 'Sheer ankle sock', category: 'Accessories', price: '39.90 ₪', image: keyItemImg('mary-jane-shoes-3.jpg') },
+    ],
+    tiktokSentiment: 81,
+    pinterestVolume: 45,
   },
 ]

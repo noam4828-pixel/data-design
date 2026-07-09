@@ -2,7 +2,7 @@ import KeyItemCard from './KeyItemCard.jsx'
 
 // One curated sub-collection inside "How to Adopt It": a sub-heading with a
 // "view all" link, then a horizontally scrolling row of product cards.
-export default function ProductRow({ title, items, nameOnly, onViewAll }) {
+export default function ProductRow({ title, items, nameOnly, placeholder, onViewAll }) {
   return (
     <div>
       <div className="flex items-baseline justify-between px-5">
@@ -18,7 +18,7 @@ export default function ProductRow({ title, items, nameOnly, onViewAll }) {
 
       <div className="mt-3 flex gap-3 overflow-x-auto pb-1 px-5">
         {items.map((item, i) => (
-          <KeyItemCard key={`${item.name}-${i}`} item={item} nameOnly={nameOnly} />
+          <KeyItemCard key={`${item.name}-${i}`} item={item} nameOnly={nameOnly} placeholder={placeholder} />
         ))}
       </div>
     </div>

@@ -10,12 +10,14 @@ import { useEffect, useRef, useState } from 'react'
 // other three are hollow. Points are clickable to reveal stage info — closed
 // by default so the resting state matches the Figma exactly.
 
-// Fixed peak-shaped forecast, straight from the Figma design (node 1:93). The
-// current point sits at the top (the peak) and the projected +6-month point
-// holds flat at the same height, so the dashed forecast line is perfectly
-// horizontal. Fractions of the plot height (0 = x-axis, 1 = peak) are tuned to
-// the exact Figma point positions (319.5 / 212.5 / 126.5 / 126.5).
-const FRACTIONS = [0.104, 0.601, 1, 1]
+// Fractions of the plot height (0 = x-axis, 1 = peak) for each point, per
+// forecast trajectory. "peak" holds flat into +6 months (horizontal dashed
+// line, per the Figma node 1:93); "declining" dips the +6-month point below
+// the current peak so the forecast line slopes down.
+const FRACTIONS_BY_TRAJECTORY = {
+  peak: [0.104, 0.601, 1, 1],
+  declining: [0.104, 0.601, 1, 0.72],
+}
 
 // The forecast badge always reads PEAK — it labels the current point as the
 // top of the lifecycle, independent of the trend's overall status.
@@ -71,10 +73,11 @@ function smoothPath(pts, startIdx, endIdx) {
   return d
 }
 
-export default function LifecycleChart({ onForecastClick }) {
+export default function LifecycleChart({ onForecastClick, trajectory = 'peak' }) {
   const [active, setActive] = useState(DEFAULT_ACTIVE)
   const popupRef = useRef(null)
-  const ys = FRACTIONS.map((f) => Y_BASE - f * (Y_BASE - Y_PEAK))
+  const fractions = FRACTIONS_BY_TRAJECTORY[trajectory] || FRACTIONS_BY_TRAJECTORY.peak
+  const ys = fractions.map((f) => Y_BASE - f * (Y_BASE - Y_PEAK))
 
   useEffect(() => {
     if (active === null) return
@@ -102,10 +105,13 @@ export default function LifecycleChart({ onForecastClick }) {
     [XS[CURRENT] + 44, ys[CURRENT]],
   ]
   const solidPath = smoothPath(splinePts, 1, 4)
-  // The dashed forecast runs flat from the current point past the +6-month
-  // point to the frame edge (Figma: x234 → x410 at the peak height).
-  const forecastY = ys[CURRENT]
+  // The dashed forecast runs from the current point through the +6-month point
+  // to the frame edge. For "peak" it stays flat; for "declining" the +6 point
+  // sits lower, so the line slopes down and the end Y extrapolates that slope.
   const FORECAST_X_END = 410
+  const forecastEndY =
+    ys[CURRENT] +
+    ((ys[FORECAST] - ys[CURRENT]) * (FORECAST_X_END - XS[CURRENT])) / (XS[FORECAST] - XS[CURRENT])
 
   // Status badge sits centred just above the current point, hugging it like in
   // Figma (PEAK: point y126.5, badge y90 → a 12.5px gap). Tracking the point's
@@ -182,9 +188,9 @@ export default function LifecycleChart({ onForecastClick }) {
         {/* Forecast: yellow glow, dashed line, then the solid curve */}
         <line
           x1={XS[CURRENT]}
-          y1={forecastY}
+          y1={ys[CURRENT]}
           x2={FORECAST_X_END}
-          y2={forecastY}
+          y2={forecastEndY}
           stroke="#FFF200"
           strokeOpacity="0.83"
           strokeWidth="3"
@@ -192,9 +198,9 @@ export default function LifecycleChart({ onForecastClick }) {
         />
         <line
           x1={XS[CURRENT]}
-          y1={forecastY}
+          y1={ys[CURRENT]}
           x2={FORECAST_X_END}
-          y2={forecastY}
+          y2={forecastEndY}
           stroke="#8E8E8E"
           strokeWidth="1"
           strokeDasharray="10 10"

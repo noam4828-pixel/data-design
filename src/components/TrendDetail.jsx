@@ -14,9 +14,19 @@ export default function TrendDetail({ trend, onViewAllKeyItems }) {
   const [activeGallery, setActiveGallery] = useState(null)
   // Trends without bespoke data fall back to content derived from their own
   // fields, so every detail page shares the same structure as Butter Yellow.
-  const collections = trend.collections || [{ title: 'The Statement Piece', items: trend.keyItems }]
+  // Every trend shows the same three "How to Adopt It" categories. Trends
+  // without bespoke collections fill The Statement Piece from their key items;
+  // the other two are placeholder rows until products are added.
+  const collections = trend.collections || [
+    { title: 'The Statement Piece', items: trend.keyItems },
+    { title: 'The Smart Twist', items: [{}, {}, {}], placeholder: true },
+    { title: 'Shop Your Closet', nameOnly: true, items: [{}, {}, {}], placeholder: true },
+  ]
+  // Palette shows four swatches (2×2), matching Butter Yellow.
+  const palette = trend.palette.slice(0, 4)
   const tagline = trend.tagline || trend.description?.split('. ')[0].replace(/\.?$/, '.')
   const social = trend.social || (trend.gallery || []).map((image) => ({ image }))
+  const declining = trend.forecast === 'declining'
 
   return (
     <div className="pb-10">
@@ -44,13 +54,18 @@ export default function TrendDetail({ trend, onViewAllKeyItems }) {
       </div>
 
       <section className="pt-[70px]">
-        <TrendForecast />
+        <TrendForecast trajectory={trend.forecast} />
       </section>
 
       {tagline && (
         <section className="px-5 pt-6">
           <div className="flex items-center gap-2.5 border border-black px-2.5 py-3 shadow-[0_4px_6px_0_rgba(0,0,0,0.05)]">
-            <svg viewBox="0 0 15 9" fill="none" className="w-[15px] h-[9px] shrink-0">
+            <svg
+              viewBox="0 0 15 9"
+              fill="none"
+              className="w-[15px] h-[9px] shrink-0"
+              style={declining ? { transform: 'scaleY(-1)', transformOrigin: 'center' } : undefined}
+            >
               <path
                 d="M10.5 0L12.2175 1.7175L8.5575 5.3775L5.5575 2.3775L0 7.9425L1.0575 9L5.5575 4.5L8.5575 7.5L13.2825 2.7825L15 4.5V0H10.5Z"
                 fill="black"
@@ -64,7 +79,7 @@ export default function TrendDetail({ trend, onViewAllKeyItems }) {
       <section className="px-5 pt-[70px]">
         <SectionTitle>COLOR PALETTE MIX</SectionTitle>
         <div className="grid grid-cols-2 gap-3 mt-6">
-          {trend.palette.map((c) => (
+          {palette.map((c) => (
             <ColorSwatch
               key={c.hex}
               hex={c.hex}
@@ -86,6 +101,7 @@ export default function TrendDetail({ trend, onViewAllKeyItems }) {
               title={col.title}
               items={col.items}
               nameOnly={col.nameOnly}
+              placeholder={col.placeholder}
               onViewAll={onViewAllKeyItems}
             />
           ))}

@@ -1,14 +1,15 @@
 import { useState } from 'react'
 
 // `nameOnly` renders a "Shop Your Closet"-style card: image + a single item
-// name, without brand or price.
-export default function KeyItemCard({ item, nameOnly }) {
+// name, without brand or price. `placeholder` renders an empty grey slot
+// (no image, no text) for categories whose products aren't in yet.
+export default function KeyItemCard({ item, nameOnly, placeholder }) {
   const [errored, setErrored] = useState(false)
 
   return (
     <div className="w-[159px] flex-shrink-0">
       <div className="relative w-[159px] h-[159px] bg-[#F2F2F2] overflow-hidden">
-        {item.image && !errored && (
+        {!placeholder && item.image && !errored && (
           <img
             src={item.image}
             alt={nameOnly ? item.name : `${item.brand} ${item.name}`}
@@ -20,7 +21,7 @@ export default function KeyItemCard({ item, nameOnly }) {
           />
         )}
       </div>
-      {nameOnly ? (
+      {placeholder ? null : nameOnly ? (
         <p className="mt-4 text-[16px] font-normal text-black">{item.name}</p>
       ) : (
         <>
