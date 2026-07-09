@@ -15,7 +15,6 @@ export default function Home({ trends, onSelect }) {
             trend={trend}
             variant="hero"
             onSelect={onSelect}
-            showSearch={trend.id === 1}
             tall={trend.id === 1}
           />
         ))}

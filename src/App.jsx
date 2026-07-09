@@ -4,16 +4,19 @@ import Home from './components/Home.jsx'
 import TrendDetail from './components/TrendDetail.jsx'
 import KeyItemsPage from './components/KeyItemsPage.jsx'
 import SplashScreen from './components/SplashScreen.jsx'
+import SearchOverlay from './components/SearchOverlay.jsx'
 import { trends } from './data/trends.js'
 
 export default function App() {
   const [selected, setSelected] = useState(null)
   const [page, setPage] = useState('home') // 'home' | 'detail' | 'keyItems'
   const [showSplash, setShowSplash] = useState(true)
+  const [searchOpen, setSearchOpen] = useState(false)
 
   const handleSelect = (trend) => {
     setSelected(trend)
     setPage('detail')
+    setSearchOpen(false)
     window.scrollTo(0, 0)
   }
 
@@ -34,7 +37,7 @@ export default function App() {
 
   const headerProps =
     page === 'home'
-      ? { title: 'LOOK BOOK', leftIcon: 'menu', onLeftClick: undefined }
+      ? { title: 'LOOK BOOK', leftIcon: 'menu', onLeftClick: undefined, rightIcon: 'search', onRightClick: () => setSearchOpen(true) }
       : page === 'detail'
         ? { title: 'LOOK BOOK', leftIcon: 'back', onLeftClick: handleBack }
         : { title: 'KEY ITEMS', leftIcon: 'back', onLeftClick: handleBack }
@@ -48,6 +51,9 @@ export default function App() {
         <TrendDetail trend={selected} onViewAllKeyItems={handleViewAllKeyItems} />
       )}
       {page === 'keyItems' && selected && <KeyItemsPage trend={selected} />}
+      {searchOpen && (
+        <SearchOverlay trends={trends} onSelect={handleSelect} onClose={() => setSearchOpen(false)} />
+      )}
     </div>
   )
 }
