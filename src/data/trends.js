@@ -94,14 +94,24 @@ export const trends = [
       // Base avatar figure; garment `overlay` images (transparent PNGs framed to
       // this same canvas) layer on top of it per body zone.
       avatar: closetImg('avatar-crop.png'),
-      // Each top has an `overlay` (transparent PNG framed to the avatar canvas)
+      // Each piece has an `overlay` (transparent PNG framed to the avatar canvas)
       // that layers onto the figure, plus a rail thumbnail `image`.
       Tops: [
         { name: 'Cap-sleeve tee', image: closetImg('top1-cut.png'), overlay: closetImg('top1-fitted.png') },
         { name: 'Cami top', image: closetImg('top2-cut.png'), overlay: closetImg('top2-fitted.png') },
+        { name: 'Polka off-shoulder', image: closetImg('top3-cut.png'), overlay: closetImg('top3-fitted.png') },
       ],
-      Bottoms: [{ name: 'Tailored shorts', image: keyItemImg('Tailored-shorts.png') }],
-      Shoes: [{ name: 'Sneakers shoes', image: keyItemImg('Sneakers-shoes.png') }],
+      Bottoms: [
+        { name: 'Tailored shorts', image: closetImg('pants1-cut.png'), overlay: closetImg('pants1-fitted.png') },
+        { name: 'Track pants', image: closetImg('pants2-cut.png'), overlay: closetImg('pants2-fitted.png') },
+      ],
+      Shoes: [
+        // Sneakers stay selectable in the rail but don't dress the avatar yet —
+        // the 3/4 product angle doesn't match the front-facing feet. Add an
+        // `overlay` once a front-view photo is available.
+        { name: 'Sneakers', image: closetImg('shoes1-cut.png') },
+        { name: 'Flip-flops', image: closetImg('shoes2-cut.png'), overlay: closetImg('shoes2-fitted.png') },
+      ],
     },
     // "How to Adopt It" — three curated sub-collections. The last one is a
     // name-only "shop your closet" row.
