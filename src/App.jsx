@@ -46,6 +46,8 @@ export default function App() {
     <div className="max-w-[480px] mx-auto bg-white min-h-screen overflow-y-auto border-x border-black/5">
       {showSplash && <SplashScreen onDone={() => setShowSplash(false)} />}
       <Header {...headerProps} />
+      {/* Spacer matching the fixed header's height so content isn't hidden beneath it */}
+      <div className="h-[103px]" aria-hidden="true" />
       {page === 'home' && <Home trends={trends} onSelect={handleSelect} />}
       {page === 'detail' && selected && (
         <TrendDetail trend={selected} onViewAllKeyItems={handleViewAllKeyItems} />

@@ -83,6 +83,7 @@ export const trends = [
     ],
     tiktokSentiment: 88,
     pinterestVolume: 42,
+    hashtags: ['#butteryellow', '#summer2026', '#fashion', '#butteryellowoutfit'],
     // "How to Adopt It" — three curated sub-collections. The last one is a
     // name-only "shop your closet" row.
     collections: [
@@ -105,7 +106,11 @@ export const trends = [
       {
         title: 'Shop Your Closet',
         nameOnly: true,
-        items: [{ name: 'Button-down shirt' }, { name: 'Tailored shorts' }, { name: 'Sneakers shoes' }],
+        items: [
+          { name: 'Button-down shirt', image: keyItemImg('Button-down-shirt.png'), imageFit: 'cover' },
+          { name: 'Tailored shorts', image: keyItemImg('Tailored-shorts.png'), imageFit: 'cover' },
+          { name: 'Sneakers shoes', image: keyItemImg('Sneakers-shoes.png'), imageFit: 'cover' },
+        ],
       },
     ],
     // "Spotted on social" — viral clips. `url` cards open the original post and

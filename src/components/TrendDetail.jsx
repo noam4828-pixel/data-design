@@ -114,6 +114,21 @@ export default function TrendDetail({ trend, onViewAllKeyItems }) {
         </section>
       )}
 
+      {trend.hashtags?.length > 0 && (
+        <section className="px-5 pt-[70px]">
+          <div className="flex flex-wrap gap-2">
+            {trend.hashtags.map((tag) => (
+              <span
+                key={tag}
+                className="bg-black text-white text-[17px] font-medium px-4 py-2.5 leading-none"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        </section>
+      )}
+
       {activeGallery && (
         <ColorGalleryOverlay images={activeGallery} onClose={() => setActiveGallery(null)} />
       )}

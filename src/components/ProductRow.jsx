@@ -10,7 +10,7 @@ export default function ProductRow({ title, items, nameOnly, placeholder, onView
         <button
           type="button"
           onClick={onViewAll}
-          className="text-[16px] text-black underline underline-offset-2 shrink-0"
+          className="text-[16px] text-[#5E5E5E] underline underline-offset-2 shrink-0"
         >
           view all
         </button>

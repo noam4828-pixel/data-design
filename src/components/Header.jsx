@@ -4,7 +4,7 @@
 // icon — so the title stays optically centred regardless of the side icons.
 export default function Header({ title = 'LOOK BOOK', leftIcon = 'menu', onLeftClick, rightIcon, onRightClick }) {
   return (
-    <header className="sticky top-0 z-30 flex items-end bg-[#f9f9f9] border-b border-black h-[103px] pb-[6px] px-6">
+    <header className="fixed top-0 left-1/2 -translate-x-1/2 z-30 w-full max-w-[480px] flex items-end bg-[#f9f9f9] border-b border-black h-[103px] pb-[6px] px-6">
       <div className="flex w-full items-center h-[50px]">
         {/* Left region */}
         <div className="flex-1 flex items-center">

@@ -22,7 +22,7 @@ export default function KeyItemCard({ item, nameOnly, placeholder }) {
         )}
       </div>
       {placeholder ? null : nameOnly ? (
-        <p className="mt-4 text-[16px] font-normal text-black">{item.name}</p>
+        <p className="mt-4 text-[16px] font-normal text-[#5E5E5E]">{item.name}</p>
       ) : (
         <>
           <p className="mt-2 text-[16px] font-normal text-black">{item.brand}</p>
