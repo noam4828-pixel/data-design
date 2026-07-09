@@ -6,6 +6,9 @@ const img = (filename) => `/images/trends/${filename}`
 // Drop key-piece product photos at public/images/keyitems/<filename>.
 const keyItemImg = (filename) => `/images/keyitems/${filename}`
 
+// "My Closet" avatar assets live in public/images/keyitems/my closet/.
+const closetImg = (filename) => `/images/keyitems/my%20closet/${filename}`
+
 export const trends = [
   {
     id: 1,
@@ -84,6 +87,22 @@ export const trends = [
     tiktokSentiment: 88,
     pinterestVolume: 42,
     hashtags: ['#butteryellow', '#summer2026', '#fashion', '#butteryellowoutfit'],
+    // "My Closet" avatar try-on — your own wardrobe pieces grouped by body zone.
+    // Add more items to any category and the arrows / side rail cycle through
+    // them. Drop the piece images in public/images/keyitems/.
+    closet: {
+      // Base avatar figure; garment `overlay` images (transparent PNGs framed to
+      // this same canvas) layer on top of it per body zone.
+      avatar: closetImg('avatar-crop.png'),
+      // Each top has an `overlay` (transparent PNG framed to the avatar canvas)
+      // that layers onto the figure, plus a rail thumbnail `image`.
+      Tops: [
+        { name: 'Cap-sleeve tee', image: closetImg('top1-cut.png'), overlay: closetImg('top1-fitted.png') },
+        { name: 'Cami top', image: closetImg('top2-cut.png'), overlay: closetImg('top2-fitted.png') },
+      ],
+      Bottoms: [{ name: 'Tailored shorts', image: keyItemImg('Tailored-shorts.png') }],
+      Shoes: [{ name: 'Sneakers shoes', image: keyItemImg('Sneakers-shoes.png') }],
+    },
     // "How to Adopt It" — three curated sub-collections. The last one is a
     // name-only "shop your closet" row.
     collections: [

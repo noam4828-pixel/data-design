@@ -9,7 +9,7 @@ import ProductRow from './ProductRow.jsx'
 import SpottedOnSocial from './SpottedOnSocial.jsx'
 import { splitTitle } from '../lib/text.js'
 
-export default function TrendDetail({ trend, onViewAllKeyItems }) {
+export default function TrendDetail({ trend, onViewAllKeyItems, onViewCloset }) {
   const [line1, line2] = splitTitle(trend.title)
   const [activeGallery, setActiveGallery] = useState(null)
   // Trends without bespoke data fall back to content derived from their own
@@ -102,7 +102,7 @@ export default function TrendDetail({ trend, onViewAllKeyItems }) {
               items={col.items}
               nameOnly={col.nameOnly}
               placeholder={col.placeholder}
-              onViewAll={onViewAllKeyItems}
+              onViewAll={col.nameOnly ? onViewCloset : onViewAllKeyItems}
             />
           ))}
         </div>

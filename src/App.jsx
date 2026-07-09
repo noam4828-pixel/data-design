@@ -3,13 +3,14 @@ import Header from './components/Header.jsx'
 import Home from './components/Home.jsx'
 import TrendDetail from './components/TrendDetail.jsx'
 import KeyItemsPage from './components/KeyItemsPage.jsx'
+import MyCloset from './components/MyCloset.jsx'
 import SplashScreen from './components/SplashScreen.jsx'
 import SearchOverlay from './components/SearchOverlay.jsx'
 import { trends } from './data/trends.js'
 
 export default function App() {
   const [selected, setSelected] = useState(null)
-  const [page, setPage] = useState('home') // 'home' | 'detail' | 'keyItems'
+  const [page, setPage] = useState('home') // 'home' | 'detail' | 'keyItems' | 'myCloset'
   const [showSplash, setShowSplash] = useState(true)
   const [searchOpen, setSearchOpen] = useState(false)
 
@@ -25,8 +26,13 @@ export default function App() {
     window.scrollTo(0, 0)
   }
 
+  const handleViewCloset = () => {
+    setPage('myCloset')
+    window.scrollTo(0, 0)
+  }
+
   const handleBack = () => {
-    if (page === 'keyItems') {
+    if (page === 'keyItems' || page === 'myCloset') {
       setPage('detail')
     } else {
       setPage('home')
@@ -40,7 +46,9 @@ export default function App() {
       ? { title: 'LOOK BOOK', leftIcon: 'menu', onLeftClick: undefined, rightIcon: 'search', onRightClick: () => setSearchOpen(true) }
       : page === 'detail'
         ? { title: 'LOOK BOOK', leftIcon: 'back', onLeftClick: handleBack }
-        : { title: 'KEY ITEMS', leftIcon: 'back', onLeftClick: handleBack }
+        : page === 'myCloset'
+          ? { title: 'MY CLOSET', leftIcon: 'back', onLeftClick: handleBack }
+          : { title: 'KEY ITEMS', leftIcon: 'back', onLeftClick: handleBack }
 
   return (
     <div className="max-w-[480px] mx-auto bg-white min-h-screen overflow-y-auto border-x border-black/5">
@@ -50,9 +58,16 @@ export default function App() {
       <div className="h-[103px]" aria-hidden="true" />
       {page === 'home' && <Home trends={trends} onSelect={handleSelect} />}
       {page === 'detail' && selected && (
-        <TrendDetail trend={selected} onViewAllKeyItems={handleViewAllKeyItems} />
+        <TrendDetail
+          trend={selected}
+          onViewAllKeyItems={handleViewAllKeyItems}
+          onViewCloset={handleViewCloset}
+        />
       )}
       {page === 'keyItems' && selected && <KeyItemsPage trend={selected} />}
+      {page === 'myCloset' && selected && (
+        <MyCloset trend={selected} onViewItems={handleViewAllKeyItems} />
+      )}
       {searchOpen && (
         <SearchOverlay trends={trends} onSelect={handleSelect} onClose={() => setSearchOpen(false)} />
       )}

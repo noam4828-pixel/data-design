@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { splitTitle } from '../lib/text.js'
 import { CATEGORY_GROUPS } from '../lib/categories.js'
-import { PinIcon, FilterIcon, PlayIcon } from './icons.jsx'
+import { PinIcon, FilterIcon } from './icons.jsx'
 import KeyItemGridCard from './KeyItemGridCard.jsx'
 import FilterPanel from './FilterPanel.jsx'
 
@@ -119,14 +119,6 @@ export default function KeyItemsPage({ trend }) {
       ) : (
         <p className="px-5 mt-10 text-center text-[13px] text-gray-500">No items match these filters.</p>
       )}
-
-      <button
-        type="button"
-        className="fixed bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-black text-white text-[13px] font-semibold uppercase px-5 py-3 z-40"
-      >
-        Match My Wardrobe
-        <PlayIcon className="w-3.5 h-3.5" />
-      </button>
     </div>
   )
 }
